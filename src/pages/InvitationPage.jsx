@@ -1,0 +1,75 @@
+import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import confetti from 'canvas-confetti'
+import { useGuestName } from '../hooks/useGuestName.js'
+import { MusicProvider, useMusicPlayer } from '../hooks/useMusicPlayer.jsx'
+import InvitationGate from '../components/InvitationGate.jsx'
+import MusicPlayer from '../components/MusicPlayer.jsx'
+import FloatingPetals from '../components/decor/FloatingPetals.jsx'
+import Hero from '../components/sections/Hero.jsx'
+import Story from '../components/sections/Story.jsx'
+import Events from '../components/sections/Events.jsx'
+import Gallery from '../components/sections/Gallery.jsx'
+import Footer from '../components/sections/Footer.jsx'
+
+function InvitationContent({ guestName }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const { play } = useMusicPlayer()
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'auto' : 'hidden'
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
+
+  const handleOpen = () => {
+    setIsOpen(true)
+    play()
+    confetti({
+      particleCount: 90,
+      spread: 75,
+      startVelocity: 38,
+      origin: { y: 0.6 },
+      colors: ['#d9b567', '#f3e4bd', '#7a1122', '#ad1a33'],
+    })
+  }
+
+  return (
+    <>
+      <AnimatePresence>
+        {!isOpen && <InvitationGate guestName={guestName} onOpen={handleOpen} />}
+      </AnimatePresence>
+
+      <FloatingPetals />
+      <main>
+        <Hero guestName={guestName} />
+        <Story />
+        <Events />
+        <Gallery />
+        <Footer />
+      </main>
+      <MusicPlayer />
+    </>
+  )
+}
+
+export default function InvitationPage() {
+  const guestName = useGuestName()
+
+  return (
+    <MusicProvider>
+      <InvitationContent guestName={guestName} />
+      {/* Chỉ hiện với chủ thiệp xem bản gốc (không có tên khách trong link) */}
+      {!guestName && (
+        <Link
+          to="/tao-thiep"
+          className="fixed bottom-5 left-5 z-50 rounded-full border border-gold-300/60 bg-cream-50/90 px-3 py-1.5 text-xs font-medium text-wine-700 shadow-md backdrop-blur transition hover:bg-gold-100"
+        >
+          Tạo link mời khách
+        </Link>
+      )}
+    </MusicProvider>
+  )
+}

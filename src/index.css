@@ -1,0 +1,118 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-script: "Dancing Script", cursive;
+  --font-body: "Be Vietnam Pro", system-ui, sans-serif;
+
+  --color-wine-950: #3d0a10;
+  --color-wine-900: #4d0d15;
+  --color-wine-800: #5e0f19;
+  --color-wine-700: #7a1122;
+  --color-wine-600: #93152a;
+  --color-wine-500: #ad1a33;
+  --color-wine-400: #c53a4d;
+
+  --color-gold-100: #faf3e0;
+  --color-gold-200: #f3e4bd;
+  --color-gold-300: #e9cf8f;
+  --color-gold-400: #d9b567;
+  --color-gold-500: #c9a04d;
+  --color-gold-600: #a9803a;
+
+  --color-cream-50: #fffdf8;
+  --color-cream-100: #fdf7ea;
+  --color-cream-200: #f8ecd4;
+
+  --color-ink: #2c1210;
+
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-float-slower: float 13s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(3deg); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: var(--color-cream-50);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-wine-700);
+    color: var(--color-gold-100);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-script {
+    font-family: var(--font-script);
+  }
+  .text-gradient-gold {
+    background: linear-gradient(90deg, #a9803a, #f3e4bd, #a9803a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shimmer-gold {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold-500) 30%,
+      #fff6da 50%,
+      var(--color-gold-500) 70%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: var(--animate-shimmer);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-400);
+  border-radius: 999px;
+}
