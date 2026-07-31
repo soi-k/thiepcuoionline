@@ -4,6 +4,7 @@ import { ArrowLeft, Download, Eye, ImagePlus, RotateCcw } from 'lucide-react'
 import { useWeddingConfig } from '../hooks/useWeddingConfig.jsx'
 import { resizeImageFile } from '../lib/imageUpload.js'
 import { configToFileText, downloadTextFile } from '../lib/exportConfig.js'
+import { assetUrl } from '../lib/assetUrl.js'
 import FloralDivider from '../components/decor/FloralDivider.jsx'
 import { Field, TextareaField } from '../components/settings/Field.jsx'
 import SectionCard from '../components/settings/SectionCard.jsx'
@@ -24,7 +25,7 @@ function GalleryItemFields({ photo, path, updateField }) {
     <>
       <div className="flex gap-3">
         <div className="aspect-[4/5] w-20 shrink-0 overflow-hidden rounded-lg border border-gold-200 bg-cream-100">
-          {photo.src && <img src={photo.src} alt="" className="h-full w-full object-cover" />}
+          {photo.src && <img src={assetUrl(photo.src)} alt="" className="h-full w-full object-cover" />}
         </div>
         <div className="flex-1 space-y-3">
           <Field

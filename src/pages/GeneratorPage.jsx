@@ -37,7 +37,7 @@ export default function GeneratorPage() {
   const [rawText, setRawText] = useState('')
   const [generated, setGenerated] = useState(null)
 
-  const baseUrl = useMemo(() => `${window.location.origin}/`, [])
+  const baseUrl = useMemo(() => `${window.location.origin}${import.meta.env.BASE_URL}`, [])
 
   const handleGenerate = () => {
     const names = parseGuestList(rawText)

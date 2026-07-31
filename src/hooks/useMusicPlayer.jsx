@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useWeddingConfig } from './useWeddingConfig.jsx'
+import { assetUrl } from '../lib/assetUrl.js'
 
 const MusicContext = createContext(null)
 
@@ -49,7 +50,7 @@ export function MusicProvider({ children }) {
   return (
     <MusicContext.Provider value={value}>
       {children}
-      <audio ref={audioRef} src={tracks[trackIndex]?.src} loop preload="none" />
+      <audio ref={audioRef} src={assetUrl(tracks[trackIndex]?.src)} loop preload="none" />
     </MusicContext.Provider>
   )
 }

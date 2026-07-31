@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
+import { assetUrl } from '../../lib/assetUrl.js'
 import SectionReveal from '../ui/SectionReveal.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 
@@ -26,7 +27,7 @@ export default function Gallery() {
                 className="group block aspect-[4/5] w-full overflow-hidden rounded-xl border border-gold-200 shadow-sm"
               >
                 <img
-                  src={photo.src}
+                  src={assetUrl(photo.src)}
                   alt={photo.alt}
                   loading="lazy"
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
@@ -50,7 +51,7 @@ export default function Gallery() {
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
-              src={active.src}
+              src={assetUrl(active.src)}
               alt={active.alt}
               className="max-h-[85vh] max-w-full rounded-lg object-contain"
             />
