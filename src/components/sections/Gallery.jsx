@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
-import { wedding } from '../../lib/weddingConfig.js'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
 import SectionReveal from '../ui/SectionReveal.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 
 export default function Gallery() {
+  const { config: wedding } = useWeddingConfig()
   const [active, setActive] = useState(null)
 
   return (
@@ -18,7 +19,7 @@ export default function Gallery() {
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
           {wedding.gallery.map((photo, i) => (
-            <SectionReveal key={photo.src} delay={i * 0.06} y={20}>
+            <SectionReveal key={`${photo.src}-${i}`} delay={i * 0.06} y={20}>
               <button
                 type="button"
                 onClick={() => setActive(photo)}

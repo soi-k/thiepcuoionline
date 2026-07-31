@@ -52,13 +52,18 @@ export default function GeneratorPage() {
   return (
     <div className="min-h-screen bg-cream-50 px-6 py-14">
       <div className="mx-auto max-w-2xl">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1.5 text-sm text-wine-700 hover:underline"
-        >
-          <ArrowLeft size={15} />
-          Về trang thiệp
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-sm text-wine-700 hover:underline"
+          >
+            <ArrowLeft size={15} />
+            Về trang thiệp
+          </Link>
+          <Link to="/tuy-chinh" className="text-sm text-wine-700 hover:underline">
+            Tuỳ chỉnh nội dung
+          </Link>
+        </div>
 
         <div className="mt-6 text-center">
           <p className="font-script text-3xl text-wine-600">Tạo link mời khách</p>

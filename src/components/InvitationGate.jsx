@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
-import { wedding } from '../lib/weddingConfig.js'
+import { useWeddingConfig } from '../hooks/useWeddingConfig.jsx'
 import FloralDivider from './decor/FloralDivider.jsx'
 
 export default function InvitationGate({ guestName, onOpen }) {
+  const { config: wedding } = useWeddingConfig()
+
   return (
     <motion.div
       initial={{ opacity: 1 }}

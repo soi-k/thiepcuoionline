@@ -1,9 +1,11 @@
 import { MapPin, Clock, CalendarHeart } from 'lucide-react'
-import { wedding } from '../../lib/weddingConfig.js'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
 import SectionReveal from '../ui/SectionReveal.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 
 export default function Events() {
+  const { config: wedding } = useWeddingConfig()
+
   return (
     <section className="bg-wine-800 px-6 py-20 text-gold-100 sm:py-28">
       <div className="mx-auto max-w-4xl text-center">
@@ -14,7 +16,7 @@ export default function Events() {
 
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
           {wedding.events.map((event, i) => (
-            <SectionReveal key={event.label} delay={i * 0.12}>
+            <SectionReveal key={`${event.label}-${i}`} delay={i * 0.12}>
               <div className="flex h-full flex-col rounded-2xl border border-gold-300/30 bg-white/5 p-7 text-left backdrop-blur-sm">
                 <p className="font-display text-xl text-gold-200">{event.label}</p>
                 <div className="mt-4 space-y-3 text-sm text-gold-100/85">

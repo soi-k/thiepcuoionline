@@ -1,8 +1,10 @@
-import { wedding } from '../../lib/weddingConfig.js'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
 import SectionReveal from '../ui/SectionReveal.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 
 export default function Story() {
+  const { config: wedding } = useWeddingConfig()
+
   return (
     <section className="bg-cream-50 px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-3xl text-center">
@@ -16,7 +18,7 @@ export default function Story() {
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {wedding.timeline.map((item, i) => (
-            <SectionReveal key={item.year} delay={i * 0.1}>
+            <SectionReveal key={`${item.year}-${i}`} delay={i * 0.1}>
               <div className="relative rounded-2xl border border-gold-200 bg-white/60 p-6 text-left shadow-sm">
                 <span className="font-display text-2xl text-wine-600">{item.year}</span>
                 <h3 className="mt-2 font-display text-lg text-ink">{item.title}</h3>

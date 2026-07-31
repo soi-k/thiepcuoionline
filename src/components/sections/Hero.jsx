@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
-import { wedding } from '../../lib/weddingConfig.js'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
 import Countdown from '../Countdown.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 import CornerOrnament from '../decor/CornerOrnament.jsx'
 
 export default function Hero({ guestName }) {
+  const { config: wedding } = useWeddingConfig()
+
   return (
     <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-wine-800 via-wine-700 to-wine-800 px-6 py-20 text-center text-gold-100">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(217,181,103,0.22),transparent_55%)]" />

@@ -1,13 +1,20 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { wedding } from '../lib/weddingConfig.js'
+import { useWeddingConfig } from './useWeddingConfig.jsx'
 
 const MusicContext = createContext(null)
 
 export function MusicProvider({ children }) {
+  const { config } = useWeddingConfig()
   const audioRef = useRef(null)
   const [trackIndex, setTrackIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const tracks = wedding.musicTracks
+  const tracks = config.musicTracks
+
+  useEffect(() => {
+    if (trackIndex >= tracks.length) {
+      setTrackIndex(0)
+    }
+  }, [tracks, trackIndex])
 
   useEffect(() => {
     const audio = audioRef.current

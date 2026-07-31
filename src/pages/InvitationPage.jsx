@@ -63,12 +63,20 @@ export default function InvitationPage() {
       <InvitationContent guestName={guestName} />
       {/* Chỉ hiện với chủ thiệp xem bản gốc (không có tên khách trong link) */}
       {!guestName && (
-        <Link
-          to="/tao-thiep"
-          className="fixed bottom-5 left-5 z-50 rounded-full border border-gold-300/60 bg-cream-50/90 px-3 py-1.5 text-xs font-medium text-wine-700 shadow-md backdrop-blur transition hover:bg-gold-100"
-        >
-          Tạo link mời khách
-        </Link>
+        <div className="fixed bottom-5 left-5 z-50 flex flex-col gap-2 sm:flex-row">
+          <Link
+            to="/tuy-chinh"
+            className="rounded-full border border-gold-300/60 bg-cream-50/90 px-3 py-1.5 text-xs font-medium text-wine-700 shadow-md backdrop-blur transition hover:bg-gold-100"
+          >
+            Tuỳ chỉnh nội dung
+          </Link>
+          <Link
+            to="/tao-thiep"
+            className="rounded-full border border-gold-300/60 bg-cream-50/90 px-3 py-1.5 text-xs font-medium text-wine-700 shadow-md backdrop-blur transition hover:bg-gold-100"
+          >
+            Tạo link mời khách
+          </Link>
+        </div>
       )}
     </MusicProvider>
   )

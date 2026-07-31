@@ -1,9 +1,11 @@
 import { Heart } from 'lucide-react'
-import { wedding } from '../../lib/weddingConfig.js'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig.jsx'
 import SectionReveal from '../ui/SectionReveal.jsx'
 import FloralDivider from '../decor/FloralDivider.jsx'
 
 export default function Footer() {
+  const { config: wedding } = useWeddingConfig()
+
   return (
     <footer className="relative overflow-hidden bg-wine-900 px-6 py-16 text-center text-gold-200">
       <SectionReveal>
