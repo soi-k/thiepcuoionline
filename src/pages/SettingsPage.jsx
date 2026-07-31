@@ -1,59 +1,15 @@
-import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Download, Eye, ImagePlus, RotateCcw } from 'lucide-react'
+import { ArrowLeft, Download, Eye, RotateCcw } from 'lucide-react'
 import { useWeddingConfig } from '../hooks/useWeddingConfig.jsx'
-import { resizeImageFile } from '../lib/imageUpload.js'
 import { configToFileText, downloadTextFile } from '../lib/exportConfig.js'
-import { assetUrl } from '../lib/assetUrl.js'
 import FloralDivider from '../components/decor/FloralDivider.jsx'
 import { Field, TextareaField } from '../components/settings/Field.jsx'
+import ImageField from '../components/settings/ImageField.jsx'
+import BankSelectField from '../components/settings/BankSelectField.jsx'
 import SectionCard from '../components/settings/SectionCard.jsx'
 import RepeatableItem from '../components/settings/RepeatableItem.jsx'
 import AddButton from '../components/settings/AddButton.jsx'
-
-function GalleryItemFields({ photo, path, updateField }) {
-  const fileInputRef = useRef(null)
-
-  const handleFile = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const dataUrl = await resizeImageFile(file)
-    updateField([...path, 'src'], dataUrl)
-  }
-
-  return (
-    <>
-      <div className="flex gap-3">
-        <div className="aspect-[4/5] w-20 shrink-0 overflow-hidden rounded-lg border border-gold-200 bg-cream-100">
-          {photo.src && <img src={assetUrl(photo.src)} alt="" className="h-full w-full object-cover" />}
-        </div>
-        <div className="flex-1 space-y-3">
-          <Field
-            label="Đường dẫn ảnh (URL hoặc /gallery/...)"
-            value={photo.src}
-            onChange={(v) => updateField([...path, 'src'], v)}
-            placeholder="https://... hoặc /gallery/photo-1.jpg"
-          />
-          <Field
-            label="Mô tả ảnh"
-            value={photo.alt}
-            onChange={(v) => updateField([...path, 'alt'], v)}
-            placeholder="Ảnh cưới ngoại cảnh"
-          />
-        </div>
-      </div>
-      <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handleFile} />
-      <button
-        type="button"
-        onClick={() => fileInputRef.current?.click()}
-        className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-wine-700 hover:underline"
-      >
-        <ImagePlus size={13} />
-        Tải ảnh lên từ máy
-      </button>
-    </>
-  )
-}
+import RsvpStats from '../components/settings/RsvpStats.jsx'
 
 export default function SettingsPage() {
   const { config, updateField, addItem, removeItem, resetConfig } = useWeddingConfig()
@@ -110,10 +66,18 @@ export default function SettingsPage() {
         </div>
 
         <div className="mt-8 space-y-6">
+          <RsvpStats />
+
           <SectionCard title="Cô dâu & Chú rể">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gold-600">Chú rể</p>
+                <ImageField
+                  label="Ảnh đại diện"
+                  value={config.groom.avatar}
+                  onChange={(v) => updateField(['groom', 'avatar'], v)}
+                  aspect="aspect-square"
+                />
                 <Field
                   label="Họ tên đầy đủ"
                   value={config.groom.fullName}
@@ -132,6 +96,12 @@ export default function SettingsPage() {
               </div>
               <div className="space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gold-600">Cô dâu</p>
+                <ImageField
+                  label="Ảnh đại diện"
+                  value={config.bride.avatar}
+                  onChange={(v) => updateField(['bride', 'avatar'], v)}
+                  aspect="aspect-square"
+                />
                 <Field
                   label="Họ tên đầy đủ"
                   value={config.bride.fullName}
@@ -185,6 +155,12 @@ export default function SettingsPage() {
               onChange={(v) => updateField(['story'], v)}
               rows={5}
             />
+            <Field
+              label="Link video (YouTube/Vimeo, để trống nếu không có)"
+              value={config.storyVideoUrl}
+              onChange={(v) => updateField(['storyVideoUrl'], v)}
+              placeholder="https://youtu.be/..."
+            />
 
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-gold-600">
@@ -192,6 +168,12 @@ export default function SettingsPage() {
               </p>
               {config.timeline.map((item, i) => (
                 <RepeatableItem key={i} onRemove={() => removeItem(['timeline'], i)}>
+                  <ImageField
+                    label="Ảnh minh hoạ"
+                    value={item.image}
+                    onChange={(v) => updateField(['timeline', i, 'image'], v)}
+                    aspect="aspect-video"
+                  />
                   <div className="grid gap-3 sm:grid-cols-3">
                     <Field
                       label="Năm"
@@ -216,7 +198,7 @@ export default function SettingsPage() {
               ))}
               <AddButton
                 label="Thêm mốc thời gian"
-                onClick={() => addItem(['timeline'], { year: '', title: '', desc: '' })}
+                onClick={() => addItem(['timeline'], { year: '', title: '', desc: '', image: '' })}
               />
             </div>
           </SectionCard>
@@ -278,20 +260,74 @@ export default function SettingsPage() {
             </div>
           </SectionCard>
 
+          <SectionCard title="Trang phục (Dress code)">
+            <TextareaField
+              label="Ghi chú"
+              value={config.dressCode.note}
+              onChange={(v) => updateField(['dressCode', 'note'], v)}
+              rows={2}
+            />
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gold-600">Tông màu</p>
+              <div className="flex flex-wrap items-center gap-3">
+                {config.dressCode.colors.map((color, i) => (
+                  <div key={i} className="flex items-center gap-1.5">
+                    <input
+                      type="color"
+                      value={color}
+                      onChange={(e) => updateField(['dressCode', 'colors', i], e.target.value)}
+                      className="h-9 w-9 cursor-pointer rounded border border-gold-200 bg-transparent p-0.5"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeItem(['dressCode', 'colors'], i)}
+                      className="text-xs text-wine-600/70 hover:text-wine-700"
+                    >
+                      Xoá
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addItem(['dressCode', 'colors'], '#7a1122')}
+                  className="rounded-full border border-dashed border-gold-300 px-3 py-1.5 text-xs font-medium text-wine-700 hover:bg-gold-100/60"
+                >
+                  + Thêm màu
+                </button>
+              </div>
+            </div>
+          </SectionCard>
+
           <SectionCard
             title="Thư viện ảnh"
-            description="Dán link ảnh đã có sẵn (khuyên dùng), hoặc tải ảnh trực tiếp từ máy — ảnh tải lên sẽ được nén và lưu tạm trên trình duyệt."
+            description="Dán link ảnh đã có sẵn (khuyên dùng), hoặc tải ảnh trực tiếp từ máy. Điền 'Album' để nhóm ảnh theo buổi lễ."
           >
             <div className="grid gap-4 sm:grid-cols-2">
               {config.gallery.map((photo, i) => (
                 <RepeatableItem key={i} onRemove={() => removeItem(['gallery'], i)}>
-                  <GalleryItemFields photo={photo} path={['gallery', i]} updateField={updateField} />
+                  <ImageField
+                    label="Đường dẫn ảnh (URL hoặc /gallery/...)"
+                    value={photo.src}
+                    onChange={(v) => updateField(['gallery', i, 'src'], v)}
+                    placeholder="https://... hoặc /gallery/photo-1.jpg"
+                  />
+                  <Field
+                    label="Mô tả ảnh"
+                    value={photo.alt}
+                    onChange={(v) => updateField(['gallery', i, 'alt'], v)}
+                    placeholder="Ảnh cưới ngoại cảnh"
+                  />
+                  <Field
+                    label="Album (VD: Ăn hỏi, Lễ cưới, Prewedding)"
+                    value={photo.category}
+                    onChange={(v) => updateField(['gallery', i, 'category'], v)}
+                  />
                 </RepeatableItem>
               ))}
             </div>
             <AddButton
               label="Thêm ảnh"
-              onClick={() => addItem(['gallery'], { src: '', alt: '' })}
+              onClick={() => addItem(['gallery'], { src: '', alt: '', category: '' })}
             />
           </SectionCard>
 
@@ -320,6 +356,60 @@ export default function SettingsPage() {
                 label="Thêm bài nhạc"
                 onClick={() =>
                   addItem(['musicTracks'], { id: `track-${Date.now()}`, title: '', src: '' })
+                }
+              />
+            </div>
+          </SectionCard>
+
+          <SectionCard
+            title="Mừng cưới (QR chuyển khoản)"
+            description="Mã QR được tạo tự động qua VietQR — khách quét là ra đúng số tài khoản, không cần đặt hàng in ấn."
+          >
+            <Field
+              label="Lời nhắn mặc định khi chuyển khoản"
+              value={config.giftMessage}
+              onChange={(v) => updateField(['giftMessage'], v)}
+            />
+            <div className="space-y-3">
+              {config.bankAccounts.map((account, i) => (
+                <RepeatableItem key={account.id ?? i} onRemove={() => removeItem(['bankAccounts'], i)}>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <Field
+                      label="Bên (VD: Nhà Trai / Nhà Gái)"
+                      value={account.owner}
+                      onChange={(v) => updateField(['bankAccounts', i, 'owner'], v)}
+                    />
+                    <BankSelectField
+                      bankBin={account.bankBin}
+                      onChange={({ bankBin, bankName }) => {
+                        updateField(['bankAccounts', i, 'bankBin'], bankBin)
+                        updateField(['bankAccounts', i, 'bankName'], bankName)
+                      }}
+                    />
+                    <Field
+                      label="Số tài khoản"
+                      value={account.accountNumber}
+                      onChange={(v) => updateField(['bankAccounts', i, 'accountNumber'], v)}
+                    />
+                    <Field
+                      label="Tên chủ tài khoản (không dấu, IN HOA)"
+                      value={account.accountName}
+                      onChange={(v) => updateField(['bankAccounts', i, 'accountName'], v)}
+                    />
+                  </div>
+                </RepeatableItem>
+              ))}
+              <AddButton
+                label="Thêm tài khoản"
+                onClick={() =>
+                  addItem(['bankAccounts'], {
+                    id: `bank-${Date.now()}`,
+                    owner: '',
+                    bankName: '',
+                    bankBin: '',
+                    accountNumber: '',
+                    accountName: '',
+                  })
                 }
               />
             </div>

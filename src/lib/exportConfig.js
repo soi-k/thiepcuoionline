@@ -5,8 +5,8 @@ export const wedding = ${JSON.stringify(config, null, 2)}
 `
 }
 
-export function downloadTextFile(filename, text) {
-  const blob = new Blob([text], { type: 'text/javascript' })
+export function downloadTextFile(filename, text, mimeType = 'text/javascript') {
+  const blob = new Blob([text], { type: mimeType })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url

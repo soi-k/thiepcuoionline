@@ -8,9 +8,13 @@ import InvitationGate from '../components/InvitationGate.jsx'
 import MusicPlayer from '../components/MusicPlayer.jsx'
 import FloatingPetals from '../components/decor/FloatingPetals.jsx'
 import Hero from '../components/sections/Hero.jsx'
+import CoupleIntro from '../components/sections/CoupleIntro.jsx'
 import Story from '../components/sections/Story.jsx'
 import Events from '../components/sections/Events.jsx'
 import Gallery from '../components/sections/Gallery.jsx'
+import Rsvp from '../components/sections/Rsvp.jsx'
+import GiftQr from '../components/sections/GiftQr.jsx'
+import Guestbook from '../components/sections/Guestbook.jsx'
 import Footer from '../components/sections/Footer.jsx'
 
 function InvitationContent({ guestName }) {
@@ -45,9 +49,13 @@ function InvitationContent({ guestName }) {
       <FloatingPetals />
       <main>
         <Hero guestName={guestName} />
+        <CoupleIntro />
         <Story />
         <Events />
-        <Gallery />
+        <Gallery guestName={guestName} />
+        <Rsvp guestName={guestName} />
+        <GiftQr />
+        <Guestbook guestName={guestName} />
         <Footer />
       </main>
       <MusicPlayer />
