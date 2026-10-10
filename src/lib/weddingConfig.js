@@ -80,12 +80,7 @@ export const wedding = {
     { src: '/gallery/prewedding-4.jpg', alt: 'Ảnh cưới 4', category: 'Prewedding' },
   ],
 
-  // File demo tự sinh — thay bằng file mp3/wav nhạc thật của bạn trong public/music
-  musicTracks: [
-    { id: 'track-1', title: 'Giai điệu 1 (demo)', src: '/music/track-1.wav' },
-    { id: 'track-2', title: 'Giai điệu 2 (demo)', src: '/music/track-2.wav' },
-    { id: 'track-3', title: 'Giai điệu 3 (demo)', src: '/music/track-3.wav' },
-  ],
+  musicTracks: [{ id: 'i-do', title: 'Em Đồng Ý (I Do)', src: '/music/i-do.mp3' }],
 
   defaultGuestGreeting: 'Trân trọng kính mời',
 
