@@ -28,6 +28,15 @@ export default function Hero({ guestName }) {
       <CornerOrnament corner="bottom-left" />
       <CornerOrnament corner="bottom-right" />
 
+      {guestName && (
+        <p
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-0 w-[160%] -translate-x-1/2 -translate-y-1/2 -rotate-[14deg] whitespace-nowrap text-center font-display text-5xl font-semibold text-gold-100/[0.07] sm:text-7xl"
+        >
+          {guestName}
+        </p>
+      )}
+
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative flex flex-col items-center">
         <motion.p
           initial={{ opacity: 0, y: -10 }}

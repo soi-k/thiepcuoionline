@@ -67,7 +67,7 @@ export const wedding = {
 
   dressCode: {
     note: 'Trân trọng kính mời quý khách chọn trang phục lịch sự, ưu tiên các tông màu chủ đạo:',
-    colors: ['#7a1122', '#d9b567', '#fdf7ea'],
+    colors: ['#7a4150', '#d98f82', '#fdf8f6'],
   },
 
   // Ảnh cưới thật của Hoàng Anh & Phương Anh
@@ -90,6 +90,7 @@ export const wedding = {
     {
       id: 'nha-trai',
       owner: 'Nhà Trai',
+      side: 'groom',
       bankName: 'Vietcombank',
       bankBin: '970436',
       accountNumber: '0123456789',
@@ -98,6 +99,7 @@ export const wedding = {
     {
       id: 'nha-gai',
       owner: 'Nhà Gái',
+      side: 'bride',
       bankName: 'Techcombank',
       bankBin: '970407',
       accountNumber: '9876543210',

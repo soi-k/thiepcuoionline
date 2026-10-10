@@ -289,7 +289,7 @@ export default function SettingsPage() {
                 ))}
                 <button
                   type="button"
-                  onClick={() => addItem(['dressCode', 'colors'], '#7a1122')}
+                  onClick={() => addItem(['dressCode', 'colors'], '#7a4150')}
                   className="rounded-full border border-dashed border-gold-300 px-3 py-1.5 text-xs font-medium text-wine-700 hover:bg-gold-100/60"
                 >
                   + Thêm màu
@@ -379,6 +379,20 @@ export default function SettingsPage() {
                       value={account.owner}
                       onChange={(v) => updateField(['bankAccounts', i, 'owner'], v)}
                     />
+                    <label className="block text-sm">
+                      <span className="mb-1.5 block font-medium text-wine-700">
+                        Hiện ảnh & tên của
+                      </span>
+                      <select
+                        value={account.side ?? ''}
+                        onChange={(e) => updateField(['bankAccounts', i, 'side'], e.target.value)}
+                        className="w-full rounded-lg border border-gold-200 bg-cream-50 px-3 py-2 text-sm text-ink outline-none focus:border-wine-400"
+                      >
+                        <option value="">Không gán (chỉ hiện "Bên")</option>
+                        <option value="groom">Chú rể</option>
+                        <option value="bride">Cô dâu</option>
+                      </select>
+                    </label>
                     <BankSelectField
                       bankBin={account.bankBin}
                       onChange={({ bankBin, bankName }) => {
@@ -405,6 +419,7 @@ export default function SettingsPage() {
                   addItem(['bankAccounts'], {
                     id: `bank-${Date.now()}`,
                     owner: '',
+                    side: '',
                     bankName: '',
                     bankBin: '',
                     accountNumber: '',

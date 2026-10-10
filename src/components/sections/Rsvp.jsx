@@ -29,7 +29,7 @@ export default function Rsvp({ guestName }) {
   }
 
   return (
-    <section className="bg-wine-800 px-6 py-20 text-gold-100 sm:py-28">
+    <section id="rsvp-section" className="bg-wine-800 px-6 py-20 text-gold-100 sm:py-28">
       <div className="mx-auto max-w-xl text-center">
         <SectionReveal>
           <ClipboardCheck className="mx-auto text-gold-400" size={30} />

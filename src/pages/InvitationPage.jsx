@@ -6,6 +6,7 @@ import { useGuestName } from '../hooks/useGuestName.js'
 import { MusicProvider, useMusicPlayer } from '../hooks/useMusicPlayer.jsx'
 import InvitationGate from '../components/InvitationGate.jsx'
 import MusicPlayer from '../components/MusicPlayer.jsx'
+import FloatingActionBar from '../components/FloatingActionBar.jsx'
 import FloatingPetals from '../components/decor/FloatingPetals.jsx'
 import Hero from '../components/sections/Hero.jsx'
 import CoupleIntro from '../components/sections/CoupleIntro.jsx'
@@ -36,7 +37,7 @@ function InvitationContent({ guestName }) {
       spread: 75,
       startVelocity: 38,
       origin: { y: 0.6 },
-      colors: ['#d9b567', '#f3e4bd', '#7a1122', '#ad1a33'],
+      colors: ['#d98f82', '#f3cfc4', '#7a4150', '#a35e6d'],
     })
   }
 
@@ -47,7 +48,7 @@ function InvitationContent({ guestName }) {
       </AnimatePresence>
 
       <FloatingPetals />
-      <main>
+      <main className="pb-16">
         <Hero guestName={guestName} />
         <CoupleIntro />
         <Story />
@@ -59,6 +60,7 @@ function InvitationContent({ guestName }) {
         <Footer />
       </main>
       <MusicPlayer />
+      <FloatingActionBar guestName={guestName} />
     </>
   )
 }
@@ -71,7 +73,7 @@ export default function InvitationPage() {
       <InvitationContent guestName={guestName} />
       {/* Chỉ hiện với chủ thiệp xem bản gốc (không có tên khách trong link) */}
       {!guestName && (
-        <div className="fixed bottom-5 left-5 z-50 flex flex-col gap-2 sm:flex-row">
+        <div className="fixed left-4 top-4 z-50 flex flex-col gap-2">
           <Link
             to="/tuy-chinh"
             className="rounded-full border border-gold-300/60 bg-cream-50/90 px-3 py-1.5 text-xs font-medium text-wine-700 shadow-md backdrop-blur transition hover:bg-gold-100"
